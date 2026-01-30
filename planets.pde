@@ -13,7 +13,6 @@ void setup() {
   size(1748, 1224);
   windowMove(1300, 100);
   createLevel();
-  frameRate(20);
   target.setValues();
 }
 boolean first = true;
@@ -58,11 +57,11 @@ void createLevel() {
   planets.clear();
   for (int i =0; i<level+1; i++) {
     PVector pos = new PVector(random(0, width), random(0, height));
-    float mass = random(6000, 12000);
+    float mass = random(2000, 4000);
     Planet p = new Planet(pos.x, pos.y, mass);
     while (player.pos.dist(pos)<p.gravity*2) {
       pos = new PVector(random(0, width), random(0, height));
-      mass = random(6000, 12000);
+      mass = random(2000, 4000);
       p = new Planet(pos.x, pos.y, mass);
     }
     planets.add(p);

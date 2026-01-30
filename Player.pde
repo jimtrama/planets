@@ -38,10 +38,11 @@ class Player extends Object {
       if (mouseX < pos.x) {
         angle += PI;
       }
+      float d = pos.dist(new PVector(mouseX,mouseY))/100;
       clicked = true;
       speed.set(0, 0);
-      float forceX = cos(angle) * 8;
-      float forceY = sin(angle) * 8;
+      float forceX = cos(angle) * d;
+      float forceY = sin(angle) * d;
       addForce(new PVector(forceX, forceY));
       return angle;
     }
@@ -49,6 +50,7 @@ class Player extends Object {
   }
 
   void boost() {
+    clicked = true;
     acceleration.add(8 * cos(this.angle), 8 * sin(this.angle));
   }
 
@@ -65,12 +67,12 @@ class Player extends Object {
       float forceX = cos(angleOfP) * force;
       float forceY = sin(angleOfP) * force;
 
-      if (distance>p.r && distance < p.gravity) {
+      if (distance>p.r && clicked){ //&& distance < p.gravity) {
         addForce(new PVector(forceX, forceY));
       }
     }
-    if(clicked)
-    acceleration.add(0,0.1);
+    // if(clicked)
+    // acceleration.add(0,0.05);
     speed.add(acceleration);
     pos.add(speed);
     acceleration.set(0, 0);
