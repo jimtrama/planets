@@ -8,7 +8,7 @@ class Planet extends Object{
         pos.x = x;
         pos.y = y;
         r = m/100;
-        gravity = (m/100)+(m/100)*1.5;
+        gravity = 2*r;
         mass = m;
     }
 
@@ -18,7 +18,7 @@ class Planet extends Object{
 
     void show(){
         fill(100,100,100,0.4);
-        circle(pos.x, pos.y, mass/100);
+        circle(pos.x, pos.y, r);
         noFill();
         stroke(255);
         circle(pos.x, pos.y, gravity*2);

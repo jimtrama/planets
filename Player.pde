@@ -40,8 +40,8 @@ class Player extends Object {
       }
       clicked = true;
       speed.set(0, 0);
-      float forceX = cos(angle) * 5;
-      float forceY = sin(angle) * 5;
+      float forceX = cos(angle) * 8;
+      float forceY = sin(angle) * 8;
       addForce(new PVector(forceX, forceY));
       return angle;
     }
@@ -49,14 +49,14 @@ class Player extends Object {
   }
 
   void boost() {
-    acceleration.add(10 * cos(this.angle), 10 * sin(this.angle));
+    acceleration.add(8 * cos(this.angle), 8 * sin(this.angle));
   }
 
   PVector update(ArrayList<Planet> planets, boolean isProjection) {
 
     for (Planet p : planets) {
       float distance = pos.dist(p.pos);
-      float force = this.mass * p.mass * 6.674 * 0.1 / (distance*distance);
+      float force = this.mass * p.mass * 6.674 * 0.3 / (distance*distance);
       float angleOfP = atan((pos.y - p.pos.y)/(pos.x - p.pos.x));
       if (p.pos.x < pos.x) {
         angleOfP += PI;
@@ -69,6 +69,8 @@ class Player extends Object {
         addForce(new PVector(forceX, forceY));
       }
     }
+    if(clicked)
+    acceleration.add(0,0.1);
     speed.add(acceleration);
     pos.add(speed);
     acceleration.set(0, 0);
@@ -76,7 +78,7 @@ class Player extends Object {
       angle = atan((pos.y - mouseY)/(pos.x - mouseX));
       if (mouseX < pos.x) {
         angle += PI;
-      }
+      } 
     }
 
     points.add(pos.copy());
