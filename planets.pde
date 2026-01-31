@@ -97,10 +97,8 @@ void checkLost(ArrayList<Planet> planets) {
   for (Planet p : planets) {
     float distance = p.pos.dist(player.pos);
     if (distance<p.r/2) {
-      float angle = atan((player.pos.y - p.pos.y)/(player.pos.x - p.pos.x ));
-      if (player.pos.x <  p.pos.x ) {
-        angle += PI;
-      }
+      float angle = aggleBetween(player.pos,p.pos);
+      println(angle);
       exp.startShowing(p.pos.x,p.pos.y,angle);
       player.resetPlayer(player.startingPos.x, player.startingPos.y);
       player.lives--;
@@ -118,4 +116,12 @@ void keyPressed() {
 void mousePressed() {
   player.addForceAtMouseAngle();
 }
+
+static float aggleBetween(PVector a, PVector b) {
+    float angle = atan((a.y - b.y)/(a.x - b.x ));
+    if (a.x <  b.x ) {
+      angle += PI;
+    }
+    return angle;
+  }
 

@@ -34,13 +34,19 @@ class Explosion extends Object{
         
         if( showing && modedCounter < 20){
             noFill();
-            arc(pos.x,pos.y,10*modedCounter -10,10*modedCounter -10,
+            arc(pos.x,pos.y,
+                10*modedCounter -10,
+                10*modedCounter -10,
                 angle-PI/4,
                 PI/4+angle);
-            arc(pos.x,pos.y,10*modedCounter,10*modedCounter,
+            arc(pos.x,pos.y,
+                10*modedCounter,
+                10*modedCounter,
                 angle-PI/4,
                 PI/4+angle);
-            arc(pos.x,pos.y,10*modedCounter+10,10*modedCounter+10,
+            arc(pos.x,pos.y,
+                10*modedCounter+10,
+                10*modedCounter+10,
                 angle-PI/4,
                 PI/4+angle);
         }

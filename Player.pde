@@ -34,11 +34,8 @@ class Player extends Object {
 
   float addForceAtMouseAngle() {
     if (!clicked) {
-      angle = atan((pos.y - mouseY)/(pos.x - mouseX));
-      if (mouseX < pos.x) {
-        angle += PI;
-      }
-      float d = pos.dist(new PVector(mouseX,mouseY))/100;
+      angle = aggleBetween(new PVector(mouseX, mouseY), pos);
+      float d = pos.dist(new PVector(mouseX, mouseY))/100;
       clicked = true;
       speed.set(0, 0);
       float forceX = cos(angle) * d;
@@ -51,6 +48,7 @@ class Player extends Object {
 
   void boost() {
     clicked = true;
+    speed.set(0,0);
     acceleration.add(8 * cos(this.angle), 8 * sin(this.angle));
   }
 
@@ -67,7 +65,7 @@ class Player extends Object {
       float forceX = cos(angleOfP) * force;
       float forceY = sin(angleOfP) * force;
 
-      if (distance>p.r && clicked){ //&& distance < p.gravity) {
+      if (distance>p.r && clicked) { //&& distance < p.gravity) {
         addForce(new PVector(forceX, forceY));
       }
     }
@@ -77,10 +75,7 @@ class Player extends Object {
     pos.add(speed);
     acceleration.set(0, 0);
     if (!isProjection) {
-      angle = atan((pos.y - mouseY)/(pos.x - mouseX));
-      if (mouseX < pos.x) {
-        angle += PI;
-      } 
+      angle = aggleBetween(new PVector(mouseX, mouseY), pos);
     }
 
     points.add(pos.copy());
@@ -91,12 +86,24 @@ class Player extends Object {
 
     if (first) {
       toReturn.clear();
-      while (pos.x<width&&pos.x>0&&pos.y>0&&pos.y<height) {
-        toReturn.add(update(planets,true));
+      boolean planeHit = false;
+      while (pos.x<width&&pos.x>0&&pos.y>0&&pos.y<height&&!planeHit) {
+        toReturn.add(update(planets, true));
+        planeHit = checkPlanetHit(planets);
       }
     }
 
     return toReturn;
+  }
+
+  boolean checkPlanetHit(ArrayList<Planet> planets) {
+    for (Planet p : planets) {
+      float distance = p.pos.dist(pos);
+      if (distance<p.r/2) {
+        return true;
+      }
+    }
+    return false;
   }
 
 
